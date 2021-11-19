@@ -2,9 +2,6 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
-import static java.lang.Math.*;
-import java.util.concurrent.ThreadLocalRandom;
-import java.lang.Object.*;
 
 
 public class Servidor extends Thread {
