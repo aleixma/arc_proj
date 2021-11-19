@@ -143,9 +143,9 @@ public class Servidor extends Thread {
         return 1; //success
     }
     
-    public ClientThread closestTaxi(ArrayList<ClientThread> taxi, cliente){
+    public HiloCliente closestTaxi(ArrayList<HiloCliente> taxi, cliente){
         int i;//contador
-        ClientThread cercano = null;//variable para devolver el thread con el taxi mas cecano.
+        HiloCliente cercano = null;//variable para devolver el thread con el taxi mas cecano.
         double x=0.0,y=0.0,z=0.0;
         coordenadas cc = cliente.gerCoords(),coordenadas ct;
         double min_actual=999999.99,actual=0.0;
