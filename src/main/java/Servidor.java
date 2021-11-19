@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static java.lang.Math.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.lang.Object.*;
 
 
 public class Servidor extends Thread {
@@ -143,11 +144,13 @@ public class Servidor extends Thread {
         return 1; //success
     }
     
+    /*
     public HiloCliente closestTaxi(ArrayList<HiloCliente> taxi, cliente){
         int i;//contador
         HiloCliente cercano = null;//variable para devolver el thread con el taxi mas cecano.
         double x=0.0,y=0.0,z=0.0;
-        coordenadas cc = cliente.gerCoords(),coordenadas ct;
+        Coordinates cc = cliente.gerCoords();
+        coordenadas ct;
         double min_actual=999999.99,actual=0.0;
    
         for(i=0;i<taxi.size();i++){
@@ -162,6 +165,7 @@ public class Servidor extends Thread {
         }
         return taxi.get(cercano);//se devuelve el de menor valor
     }
+*/
     
     public void close() throws IOException {
         in.close();
