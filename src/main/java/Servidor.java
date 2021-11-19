@@ -143,6 +143,26 @@ public class Servidor extends Thread {
         return 1; //success
     }
     
+    public ClientThread closestTaxi(ArrayList<ClientThread> taxi, cliente){
+        int i;//contador
+        ClientThread cercano = null;//variable para devolver el thread con el taxi mas cecano.
+        double x=0.0,y=0.0,z=0.0;
+        coordenadas cc = cliente.gerCoords(),coordenadas ct;
+        double min_actual=999999.99,actual=0.0;
+   
+        for(i=0;i<taxi.size();i++){
+            ct = taxi.get(i).getCoords();
+            x = cc.getx() - ct.getx;
+            y = cc.gety() - ct.gety;
+            z = cc.getz() - ct.getz;
+            actual = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(x, 2));
+            if(actual >= min_actual){
+                cercano = taxi.get(i);
+            }
+        }
+        return taxi.get(cercano);//se devuelve el de menor valor
+    }
+    
     public void close() throws IOException {
         in.close();
         out.close();
