@@ -13,6 +13,10 @@ public class HiloCliente extends Thread{
     final Servidor server;
     final int id;
     private String coords;
+    
+    private long startTime;
+    private long initTime;
+    private long fullTime;
 
     HiloCliente(Socket cs, BufferedReader in, PrintWriter out,int id, Servidor server) {
         this.id=id;
@@ -20,6 +24,10 @@ public class HiloCliente extends Thread{
         this.cs=cs;
         this.in=in;
         this.out=out;
+        
+        this.startTime = 0;
+        this.initTime = 0;
+        this.fullTime = 0;
     }
      
     @Override
@@ -29,6 +37,9 @@ public class HiloCliente extends Thread{
         while (true) {
             try {
                 received = in.readLine();
+                if (this.startTime==0){
+                    this.startTime = System.currentTimeMillis();
+                }
                   
                 // Comandos sin más datos
                 switch (received) {          
@@ -37,12 +48,18 @@ public class HiloCliente extends Thread{
                         server.clientList.add(this);
                         out.println(id);
                         System.out.println("Nuevo cliente conectado, id: "+this.id);
+                        if (this.initTime==0){
+                            this.initTime = this.startTime - System.currentTimeMillis();
+                        }
                         break;
                     case "taxi" :
                         this.mode = "taxi";
                         server.taxiList.add(this);
                         out.println(id);
                         System.out.println("Nuevo taxi conectado, id: "+this.id);
+                        if (this.initTime==0){
+                            this.initTime = this.startTime - System.currentTimeMillis();
+                        }
                         break;
                     case "salir":
                         if (this.mode.equals("taxi")){
@@ -65,12 +82,18 @@ public class HiloCliente extends Thread{
                         this.coords = r[2];
                         System.out.println("El cliente "+recvID+" pide un taxi desde la posición: "+this.coords);
                         server.notifyTaxi(recvID,this);
+                        if (this.fullTime==0){
+                            this.fullTime = this.startTime - System.currentTimeMillis();
+                        }
                         break;
                     case "acepta":
                         int selected = 0;
                         do {
                             selected = server.selectClient(this);
                         } while (selected == 0);
+                        if (this.fullTime==0){
+                            this.fullTime = this.startTime - System.currentTimeMillis();
+                        }
                         break;
                     default:
                         break;
