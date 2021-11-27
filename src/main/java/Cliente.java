@@ -50,6 +50,7 @@ public class Cliente extends Thread {
         if (this.id==0){
             sendv("taxi");
             receiveID();
+            sendv("initAck");
         }
         // Hilos para el cliente de coordenadas UDP y el receptor de mensajes TCP
         UDPCoords coordT = new UDPCoords(this);
@@ -60,6 +61,7 @@ public class Cliente extends Thread {
         // Espera un poco y comunica al servidor que esta listo para aceptar una solicitud de cliente
         Thread.sleep(10000+(Rand(20)*1000));
         sendv("acepta");
+        Thread.sleep(30000);
         sendv("salir");
     }
     
@@ -68,6 +70,7 @@ public class Cliente extends Thread {
         if (this.id==0){
             sendv("client");
             receiveID();
+            sendv("initAck");
         }
 
         // Espera cierto tiempo y envía una solicitud al servidor, luego se queda esperando respuesta

@@ -48,21 +48,26 @@ public class HiloCliente extends Thread{
                         server.clientList.add(this);
                         out.println(id);
                         System.out.println("Nuevo cliente conectado, id: "+this.id);
-                        if (this.initTime==0){
-                            this.initTime = System.currentTimeMillis() - this.startTime;
-                            server.estadisticas.addClienteInit(this.initTime);
-                            System.out.println("Tiepo medio de inicialización del cliente: " + server.estadisticas.getMediaInitClientes());
-                        }
                         break;
                     case "taxi" :
                         this.mode = "taxi";
                         server.taxiList.add(this);
                         out.println(id);
                         System.out.println("Nuevo taxi conectado, id: "+this.id);
-                        if (this.initTime==0){
-                            this.initTime = System.currentTimeMillis()- this.startTime;
-                            server.estadisticas.addTaxiInit(this.initTime);
-                            System.out.println("Tiepo medio de inicialización del taxi: " +server.estadisticas.getMediaInitTaxis());
+                        break;
+                    case "initAck":
+                        if (this.mode.equals("taxi")){
+                            if (this.initTime==0){
+                                this.initTime = System.currentTimeMillis()- this.startTime;
+                                server.estadisticas.addTaxiInit(this.initTime);
+                                System.out.println("Tiepo medio de inicialización del taxi: " +server.estadisticas.getMediaInitTaxis());
+                            }
+                        } if (this.mode.equals("client")){
+                            if (this.initTime==0){
+                                this.initTime = System.currentTimeMillis() - this.startTime;
+                                server.estadisticas.addClienteInit(this.initTime);
+                                System.out.println("Tiepo medio de inicialización del cliente: " + server.estadisticas.getMediaInitClientes());
+                            }
                         }
                         break;
                     case "salir":
