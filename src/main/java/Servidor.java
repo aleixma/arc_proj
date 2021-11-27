@@ -22,6 +22,8 @@ public class Servidor extends Thread {
     boolean notifyClient = false;
     ArrayList<Integer> clientsNotified = new ArrayList<Integer>();
     
+    Estadisticas estadisticas;
+    
     
     Servidor(int port) {
         
@@ -30,6 +32,8 @@ public class Servidor extends Thread {
             ss = new ServerSocket(port);
             
             System.out.println("Servidor escuchando en puerto " + port);
+            
+            estadisticas = new Estadisticas();
             
         } catch (IOException ex) {
             System.out.println("Server exception: " + ex.getMessage());

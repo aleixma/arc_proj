@@ -60,6 +60,7 @@ public class Cliente extends Thread {
         // Espera un poco y comunica al servidor que esta listo para aceptar una solicitud de cliente
         Thread.sleep(10000+(Rand(20)*1000));
         sendv("acepta");
+        sendv("salir");
     }
     
     public void startClient() throws Exception{
@@ -73,7 +74,8 @@ public class Cliente extends Thread {
         Thread.sleep((Rand(10)*1000));
         sendv("solicita "+ id + " " + coords);
         receive();
-        Thread.sleep(60000);
+        Thread.sleep(30000);
+        sendv("salir");
     }
     
     

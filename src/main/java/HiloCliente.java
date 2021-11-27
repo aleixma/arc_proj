@@ -49,7 +49,9 @@ public class HiloCliente extends Thread{
                         out.println(id);
                         System.out.println("Nuevo cliente conectado, id: "+this.id);
                         if (this.initTime==0){
-                            this.initTime = this.startTime - System.currentTimeMillis();
+                            this.initTime = System.currentTimeMillis() - this.startTime;
+                            server.estadisticas.addClienteInit(this.initTime);
+                            System.out.println("Tiepo medio de inicialización del cliente: " + server.estadisticas.getMediaInitClientes());
                         }
                         break;
                     case "taxi" :
@@ -58,10 +60,13 @@ public class HiloCliente extends Thread{
                         out.println(id);
                         System.out.println("Nuevo taxi conectado, id: "+this.id);
                         if (this.initTime==0){
-                            this.initTime = this.startTime - System.currentTimeMillis();
+                            this.initTime = System.currentTimeMillis()- this.startTime;
+                            server.estadisticas.addTaxiInit(this.initTime);
+                            System.out.println("Tiepo medio de inicialización del taxi: " +server.estadisticas.getMediaInitTaxis());
                         }
                         break;
                     case "salir":
+                        //server.estadisticas.printEj();
                         if (this.mode.equals("taxi")){
                             server.taxiList.remove(this);
                         } if (this.mode.equals("client")){
@@ -83,7 +88,9 @@ public class HiloCliente extends Thread{
                         System.out.println("El cliente "+recvID+" pide un taxi desde la posición: "+this.coords);
                         server.notifyTaxi(recvID,this);
                         if (this.fullTime==0){
-                            this.fullTime = this.startTime - System.currentTimeMillis();
+                            this.fullTime = System.currentTimeMillis()- this.startTime;
+                            server.estadisticas.addClienteFull(this.fullTime);
+                            System.out.println("Tiepo medio de solicitud del cliente: " +server.estadisticas.getMediaFullClientes());
                         }
                         break;
                     case "acepta":
@@ -92,7 +99,9 @@ public class HiloCliente extends Thread{
                             selected = server.selectClient(this);
                         } while (selected == 0);
                         if (this.fullTime==0){
-                            this.fullTime = this.startTime - System.currentTimeMillis();
+                            this.fullTime = System.currentTimeMillis()- this.startTime;
+                            server.estadisticas.addTaxiFull(this.fullTime);
+                            System.out.println("Tiepo medio de solicitud del taxi: " +server.estadisticas.getMediaFullTaxis());
                         }
                         break;
                     default:
