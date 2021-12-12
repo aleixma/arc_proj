@@ -11,7 +11,7 @@ public class HiloCliente extends Thread{
     final PrintWriter out;
     final BufferedReader in;
     final Servidor server;
-    final int id;
+    private int id;
     private String coords;
     
     private long startTime;
@@ -109,6 +109,20 @@ public class HiloCliente extends Thread{
                             System.out.println("Tiepo medio de solicitud del taxi: " +server.estadisticas.getMediaFullTaxis());
                         }
                         break;
+                    case "rtaxi":
+                        int oldIDt = Integer.parseInt(r[1]);
+                        this.id = oldIDt;
+                        this.mode = "taxi";
+                        server.taxiList.add(this);
+                        //server.closedTaxiList.remove(this);
+                        break;
+                    case "rclient":
+                        int oldIDc = Integer.parseInt(r[1]);
+                        this.id = oldIDc;
+                        this.mode = "client";
+                        server.clientList.add(this);
+                        //server.closedClientList.remove(this);
+                        break;
                     default:
                         break;
                 }
@@ -132,6 +146,14 @@ public class HiloCliente extends Thread{
             } catch (Exception e) {
                 System.out.println("Server exception: " + e.getMessage());
                 e.printStackTrace();
+                // Si el servidor se desconecta, se añade el objeto a la lista de desconectados para luego buscarlo al reconectar
+                if (this.mode.equals("taxi")){
+                    server.closedTaxiList.add(this);
+                    server.taxiList.remove(this);
+                } else if (this.mode.equals("client")){
+                    server.closedClientList.add(this);
+                    server.clientList.remove(this);
+                }
             }
         }
     }

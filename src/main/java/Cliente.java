@@ -47,10 +47,14 @@ public class Cliente extends Thread {
     
     public void startTaxi() throws Exception{
         // Inizializa el taxi
-        if (this.id==0){
+        while (this.id==0){
             sendv("taxi");
             receiveID();
             sendv("initAck");
+        }
+        //reconecta el taxi
+        if (this.id!=0) {
+            sendv("rtaxi "+this.id);
         }
         // Hilos para el cliente de coordenadas UDP y el receptor de mensajes TCP
         UDPCoords coordT = new UDPCoords(this);
@@ -67,12 +71,15 @@ public class Cliente extends Thread {
     
     public void startClient() throws Exception{
         // Inizializa el cliente
-        if (this.id==0){
+        while (this.id==0){
             sendv("client");
             receiveID();
             sendv("initAck");
         }
-
+        //reconecta el cliente
+        if (this.id!=0) {
+            sendv("rclient "+this.id);
+        }
         // Espera cierto tiempo y envía una solicitud al servidor, luego se queda esperando respuesta
         Thread.sleep((Rand(10)*1000));
         sendv("solicita "+ id + " " + coords);

@@ -18,6 +18,8 @@ public class Servidor extends Thread {
     private int id = 0;
     List<HiloCliente> taxiList = new ArrayList<>();
     List<HiloCliente> clientList = new ArrayList<>();
+    List<HiloCliente> closedTaxiList = new ArrayList<>();
+    List<HiloCliente> closedClientList = new ArrayList<>();
     
     boolean notifyClient = false;
     ArrayList<Integer> clientsNotified = new ArrayList<Integer>();
