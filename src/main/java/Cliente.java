@@ -2,6 +2,8 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Cliente extends Thread {
     String mode = "";
@@ -106,7 +108,7 @@ public class Cliente extends Thread {
         return resp;
     }
     
-    public void sendv(String msg) throws IOException {
+    public void sendv(String msg) {
         // Solo envia el mensaje
         out.println(msg);
     }
@@ -129,11 +131,13 @@ public class Cliente extends Thread {
         return received;
     }
     
-    public void receiveID() throws IOException{
-        // Guarda la ID del cliente
-        String received = in.readLine();
-        System.out.println("Servidor: ID "+received);
-        this.id=Integer.parseInt(received);
+    public void receiveID() {
+        try {
+            // Guarda la ID del cliente
+            String received = in.readLine();
+            System.out.println("Servidor: ID "+received);
+            this.id=Integer.parseInt(received);
+        } catch (IOException ex) {}
     }
     
     public void sendCoords() throws IOException{

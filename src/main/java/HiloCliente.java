@@ -87,6 +87,7 @@ public class HiloCliente extends Thread{
                 // Comandos con más datos separados por espacios
                 String[] r = received.split(" ");
                 switch (r[0]) {
+                    // El cliente solicita un taxi
                     case "solicita":
                         int recvID = Integer.parseInt(r[1]);
                         this.coords = r[2];
@@ -98,6 +99,7 @@ public class HiloCliente extends Thread{
                             System.out.println("Tiepo medio de solicitud del cliente: " +server.estadisticas.getMediaFullClientes());
                         }
                         break;
+                    // El taxi acepta una petición
                     case "acepta":
                         int selected = 0;
                         do {
@@ -109,6 +111,7 @@ public class HiloCliente extends Thread{
                             System.out.println("Tiepo medio de solicitud del taxi: " +server.estadisticas.getMediaFullTaxis());
                         }
                         break;
+                    // El cliente intenta reconectar
                     case "rtaxi":
                         int oldIDt = Integer.parseInt(r[1]);
                         this.id = oldIDt;
