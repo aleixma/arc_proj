@@ -151,10 +151,10 @@ public class HiloCliente extends Thread{
                 e.printStackTrace();
                 // Si el servidor se desconecta, se añade el objeto a la lista de desconectados para luego buscarlo al reconectar
                 if (this.mode.equals("taxi")){
-                    server.closedTaxiList.add(this);
+                    //server.closedTaxiList.add(this);
                     server.taxiList.remove(this);
                 } else if (this.mode.equals("client")){
-                    server.closedClientList.add(this);
+                    //server.closedClientList.add(this);
                     server.clientList.remove(this);
                 }
             }
